@@ -39,14 +39,14 @@ class BlogResource extends Resource
 
                 Section::make()->description("create blog over here ...")->collapsible()->schema([
                     FileUpload::make('image')->required(),
-                    TextInput::make("title")->required(),
-                    TextInput::make("slug")->required(),
+                    TextInput::make("title")->rules('max:100|min:3')->required(),
+                    TextInput::make("slug")->unique()->rules(['alpha_dash'])->required(),
 
                     Select::make("category_id")->label('Category')->options(Category::all()->pluck('name','id'))->required(),
 
                     ColorPicker::make('color')->required(),
                     RichEditor::make('content')->required(),
-                    TagsInput::make('tags')->required(),
+                    TagsInput::make('tags')->nullable()->required(),
                     Checkbox::make('published')
                 ])->columns(1)
 

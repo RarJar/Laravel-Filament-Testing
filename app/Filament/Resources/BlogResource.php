@@ -32,6 +32,12 @@ class BlogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rss';
 
+    protected static ?string $navigationGroup = 'Blog Management';
+
+    protected static ?int $navigationSort = 2;
+
+    // protected static ?string $navigationParentItem = 'Categories';
+
     public static function form(Form $form): Form
     {
         return $form

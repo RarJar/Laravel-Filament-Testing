@@ -4,9 +4,12 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -30,7 +33,18 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make("name")->required(),
+                TextInput::make("name")->required()->live()->afterStateUpdated(function (?string $operation,?string $state, ?string $old,Get $get,Set $set) {
+                    if (($get('slug') ?? '') !== Str::slug($old)) {
+                        return;
+                    }
+
+                    if($operation === 'edit'){
+                        return;
+                    };
+
+                    $set('slug',Str::slug($state));
+                }),
+
                 TextInput::make("slug")->required(),
             ]);
     }

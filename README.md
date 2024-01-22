@@ -12,4 +12,7 @@
 - php artisan migrate
 - php artisan serve
 
-
+For Relationship Manager
+- php artisan make:filament-relation-manager CategoryResource blogs title
+## Docs
+- https://filamentphp.com/docs/3.x/panels/resources/relation-managers

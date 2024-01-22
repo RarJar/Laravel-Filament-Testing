@@ -28,11 +28,7 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make("name")->required(),
                 TextInput::make("email")->email()->required(),
-                TextInput::make("password")->password()->required()->visibleOn('create'),
-                // Select::make("gender")->options([
-                //     'male' => 'Male',
-                //     'female' => 'Female'
-                // ])->required()
+                TextInput::make("password")->password()->required()->visibleOn('create')
             ]);
     }
 

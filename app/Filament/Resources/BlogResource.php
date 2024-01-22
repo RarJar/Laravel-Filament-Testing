@@ -40,9 +40,9 @@ class BlogResource extends Resource
                 Section::make()->description("create blog over here ...")->collapsible()->schema([
                     FileUpload::make('image')->required(),
                     TextInput::make("title")->rules('max:100|min:3')->required(),
-                    TextInput::make("slug")->unique()->rules(['alpha_dash'])->required(),
+                    TextInput::make("slug")->unique(ignoreRecord: true)->rules(['alpha_dash'])->required(),
 
-                    Select::make("category_id")->label('Category')->options(Category::all()->pluck('name','id'))->required(),
+                    Select::make("category_id")->label('Category')->options(Category::all()->pluck('name','id'))->searchable()->required(),
 
                     ColorPicker::make('color')->required(),
                     RichEditor::make('content')->required(),
@@ -57,18 +57,20 @@ class BlogResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make("image"),
-                TextColumn::make("title"),
-                TextColumn::make("category.name"),
-                ColorColumn::make("color"),
-                TextColumn::make("tags"),
-                CheckboxColumn::make('published')
+                ImageColumn::make("image")->toggleable(),
+                TextColumn::make("title")->sortable()->searchable()->toggleable(),
+                TextColumn::make("category.name")->sortable()->searchable()->toggleable(),
+                ColorColumn::make("color")->toggleable(),
+                TextColumn::make("tags")->sortable()->searchable()->toggleable(),
+                CheckboxColumn::make('published')->toggleable(),
+                TextColumn::make("created_at")->label('Published on')->date()->sortable()->toggleable()
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

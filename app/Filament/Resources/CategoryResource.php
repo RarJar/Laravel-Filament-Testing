@@ -34,14 +34,16 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make("name"),
-                TextColumn::make("slug")
+                TextColumn::make("name")->sortable()->searchable(),
+                TextColumn::make("slug")->sortable()->searchable(),
+                TextColumn::make("created_at")->label('Published on')->date()->sortable()
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

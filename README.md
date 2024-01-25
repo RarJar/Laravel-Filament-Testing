@@ -14,5 +14,12 @@
 
 For Relationship Manager
 - php artisan make:filament-relation-manager CategoryResource blogs title
-## Docs
+# Docs
 - https://filamentphp.com/docs/3.x/panels/resources/relation-managers
+
+For Chart
+
+- php artisan make:filament-widget BlogPostsChart --chart
+
+For fetch data
+- composer require flowframe/laravel-trend
